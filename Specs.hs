@@ -3,6 +3,7 @@ where
 import Order
 import LagsSimple as S
 import LagsPerformante as P
+import LagsMap as M
 import Test.QuickCheck
 import Test.Hspec
 import qualified Data.Map as Map
@@ -87,6 +88,24 @@ main = do
                 let ps = Map.fromList [(0,0),(5,10)]
                     ps' = addOrder 10 (0,9,7) ps
                 ps' `shouldBe` Map.fromList [(0,0),(5,10),(9,10)]
+
+        describe "Lags on map" $ do
+            it "should map the orders on a plan" $ do
+                plan [] `shouldBe` Map.empty
+                plan [(0,5,10)] `shouldBe` Map.fromList [(0,(0,[])),
+                                                         (5,(0,[(0,5,10)]))]
+                plan [(0,5,10),(3,2,12)] `shouldBe` 
+                    Map.fromList [(0,(0,[])),
+                                  (3,(0,[])),
+                                  (5,(0,[(0,5,10),(3,2,12)]))]
+                plan [(0,5,10),(0,7,12)] `shouldBe`
+                    Map.fromList [(0,(0,[])),
+                                  (5,(0,[(0,5,10)])),
+                                  (7,(0,[(0,7,12)]))]
+
+            it "should calculate the best profit" $ do
+                profit [] `shouldBe` 0
+                profit [(0,5,10)] `shouldBe` 10
 
     -- quickCheck (\orders -> P.lags orders == S.lags orders)
 

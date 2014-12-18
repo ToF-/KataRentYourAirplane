@@ -38,6 +38,25 @@ addOrder m o ps =
     les prix des heures précédentes
     les prix des vols arrivant à cette heure + prix de départ du vol
 calculer le prix de la dernière heure 
+
+
+info in insertWith
+
+Prelude Data.Map> insertWith (++) 4 "" empty
+fromList [(4,"")]
+Prelude Data.Map> insertWith (++) 3 "" it
+fromList [(3,""),(4,"")]
+Prelude Data.Map> insertWith (++) 4 "A" it
+fromList [(3,""),(4,"A")]
+Prelude Data.Map> insertWith (++) 3 "B" it
+fromList [(3,"B"),(4,"A")]
+Prelude Data.Map> insertWith (++) 5 "C" it
+fromList [(3,"B"),(4,"A"),(5,"C")]
+Prelude Data.Map> insertWith (++) 5 "A" it
+fromList [(3,"B"),(4,"A"),(5,"AC")]
+Prelude Data.Map> insertWith (++) 5 "B" it
+fromList [(3,"B"),(4,"A"),(5,"BAC")]
+
 --}
  
 
